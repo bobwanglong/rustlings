@@ -14,7 +14,7 @@
 
 // Execute `rustlings hint hashmaps3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+// 需要再学习
 
 use std::collections::HashMap;
 
@@ -40,10 +40,49 @@ fn build_scores_table(results: String) -> HashMap<String, Team> {
         // will be the number of goals conceded from team_2, and similarly
         // goals scored by team_2 will be the number of goals conceded by
         // team_1.
+        // let team1 = scores.entry(team_1_name.clone()).or_insert(Team {
+        //     name: team_1_name.clone(),
+        //     goals_scored: team_1_score,
+        //     goals_conceded: team_2_score,
+        // });
+        // let team2 = scores.entry(team_2_name.clone()).or_insert(Team {
+        //     name: team_2_name.clone(),
+        //     goals_scored: team_2_score,
+        //     goals_conceded: team_1_score,
+        // });
+        // team1.goals_scored += team_1_score;
+        // team1.goals_conceded += team_2_score;
+        // team2.goals_scored += team_2_score;
+        // team2.goals_conceded += team_1_score;
+        update_score(&mut scores, team_1_name.clone(), team_1_score, team_2_score);
+        update_score(&mut scores, team_2_name.clone(), team_2_score, team_1_score);
     }
     scores
 }
-
+fn update_score(
+    score: &mut HashMap<String, Team>,
+    name: String,
+    goals_scored: u8,
+    goals_conceded: u8,
+) {
+    match score.get_mut(&name) {
+        // Some(team:&mut Team)=>{
+        Some(team) => {
+            team.goals_scored += goals_scored;
+            team.goals_conceded += goals_conceded;
+        }
+        None => {
+            score.insert(
+                name.clone(),
+                Team {
+                    name,
+                    goals_scored,
+                    goals_conceded,
+                },
+            );
+        }
+    }
+}
 #[cfg(test)]
 mod tests {
     use super::*;
