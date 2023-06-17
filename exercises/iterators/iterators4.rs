@@ -1,7 +1,7 @@
 // iterators4.rs
 // Execute `rustlings hint iterators4` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
+//
 
 pub fn factorial(num: u64) -> u64 {
     // Complete this function to return the factorial of num
@@ -13,6 +13,27 @@ pub fn factorial(num: u64) -> u64 {
     // For an extra challenge, don't use:
     // - recursion
     // Execute `rustlings hint iterators4` for hints.
+    // 方法1
+    // (1..=num).product()
+    // 方法2 递归
+    // fn do_factorial(acc: u64, num: u64) -> u64 {
+    //     // if num == 0 || num == 1 {
+    //     // acc
+    //     // } else {
+    //     // do_factorial(acc * num, num - 1)
+    //     // }
+    //     match num {
+    //         1 | 0 => acc,
+    //         _ => do_factorial(acc * num, num - 1),
+    //     }
+    // }
+    // do_factorial(1, num)
+
+    // 方法3 递归写法3
+    (1..=num).fold(1, |acc, num| match num {
+        1 | 0 => acc,
+        _ => acc * num,
+    })
 }
 
 #[cfg(test)]
